@@ -3,7 +3,13 @@
 Aim : Making an Working mini version for all machine learning mathematical computations by making mini version of numpy to work and do computations
 
 # TODO Targets
-  1. Making Basic vectors and matrix abstraction layers consisting of their all fundamental framework to work with 
+  1. Making Basic vectors and matrix abstraction layers consisting of their all fundamental framework to work with
+      Specific target
+        > Make automatic matrix solving equations using known formulas for solving matrix dependecy
+        > Introduce Least square approximation methods for proceesding for the further ML topics
+            Requirements 
+              + Transposing and other solving  unit to work for solving the least square equation
+              + making matrix equation parsing engine for the solving of matrix
   2. Adding abstract interconnected concepts to the Matrix and vectors for easy framwork to adapt to for further development
 
   Specific focus

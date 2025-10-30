@@ -36,6 +36,19 @@ class Vector(list):
                 else:
                     print("Vectors of numbers are only supported")
 
+    def equal_to(self, v):
+        i = 0
+        check = 1
+        if len(v) == len(self):
+            for num in self:
+                if num != v[i]:
+                    check *= 0
+                i += 1
+            if check == 1:
+                return True
+            else:
+                return False
+
     def scale_with(self, number):
         scalled = []
         for element in self:
@@ -62,8 +75,11 @@ class Vector(list):
             print("Either you messed with length or its not vector -_-")
             return None
     
-    def dependecy_with(self, vector, option=1):
+    def dependecy_with(self, vector, option=1):  # Dependency check are working fine
         '''
+        Tested working dependency checking logic *U*
+
+
         Make dependecy analysis at vector level for ease in row echelion form reduction operations further
         Functions discriptions and scope
             > Making dependecy validations for other operations of projects function
@@ -78,25 +94,33 @@ class Vector(list):
                 if difference of all of the numbers are same then they have one addition dependency other then they dont ^-^
 
         '''
-        validate = 1
+        print(f"input set : {vector} and {self}")
+        dependency = 1
+        # Cases require optimisation as  same flow is repeated over all of the checks
         match option:
-            case 1:
-                check = vector[0] - self[0]
+            case 1:  # Also checks for the subtractioin of the number
+                check = int(vector[0]) - int(self[0])
+
                 for x1,x2 in zip(self[1:],vector[1:]):
                     if float(x2 - x1) != check:
-                        validate *= 0
-                if validate:
+                        dependency *= 0
+
+                if dependency == 0:
+                    return 0
+                else:
                     return check
 
             case 2:
-                pass # todo  Multiplicative dependency | Make it via divide check equations
-            case 3:
-                pass # todo Vector based maping dependency
+                check = vector[0] / self[0]
+
+                for x1, x2 in zip(self[1:], vector[1:]):
+                    if (x2 / x1) != check:
+                        dependency *= 0
+                if dependency == 0:
+                    return 0
+                else:
+                    print(f"Dependency with multiplication {check}")
+                    return check  # Multiplication dependency
 
 
-
-v1 = Vector([1,1,1])
-v2 = Vector([2,2,2])
-
-print(f"Dependecy check of vector : {v1.dependecy_with(v2)}")
 
