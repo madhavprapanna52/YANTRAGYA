@@ -15,3 +15,16 @@ Aim : Making an Working mini version for all machine learning mathematical compu
   Specific focus
       -> Automatic Matrix based equation solving system
       -> Least square solving tool for Linear Regression system
+
+
+Bugs fixing
+
+Root cause : Using decimals and fractions for maping relation ins dependency parsing results in maping all entities together 
+    fix   : Make strictly integer based maping of the numbes for  the respective collums which would limmit non terminating fractional relation
+    Result : Ruining other dependent part to work unpredectibly 
+
+matrix solving procedure to break down
+Rank finding algorithm is broken
+  Procedure for rank finding is to make sure its correct
+
+  First learn about  the actual dependency thing in matrix situation to make and parse to find other elements , 

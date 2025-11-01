@@ -111,7 +111,7 @@ class Vector(list):
                     return check
 
             case 2:
-                check = vector[0] / self[0]
+                check = int(vector[0] / self[0]) # Fixed whole set of errrors out of float based dependency
 
                 for x1, x2 in zip(self[1:], vector[1:]):
                     if (x2 / x1) != check:

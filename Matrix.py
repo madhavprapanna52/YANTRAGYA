@@ -93,12 +93,14 @@ class Matrix(list):
                 - check all Dependecy of other collum with the target collum
 
                   Fetch rank of the matrix > Make list of collum vectors and iterate to the vectros to see dependency
+
+        BUG Making moduler rank finding system , dependency parsing mechanism is being broken now 0_o
         """
         columns = self.colums()
         rank = 1
         dependecy_map = {}
 
-        col1 = columns[0] # Making dependency check with one
+        col1 = columns[0] # Error fixed
         independent = 1
 
         dependent_rows = []
@@ -124,6 +126,21 @@ class Matrix(list):
 
 # Making Linear Algebra basic tools
 
+def dependency_parsing(colum, columns):
+    """
+    input : Vector list as columns
+    output : Dependency count
+    """
+    c = 0
+    for t in columns:
+        print(f"Dependency parsing working for {t} and {colum} for fetching multiplicatioin relation")
+        d = colum.dependecy_with(t,option=2) # fetching multiplication dpendency
+        print(f"We have fetched the dependency number with above inputs to get {d}")
+        if d != 0:
+            c += 1  # BUG Dependency parsing should be limmited with just integers based maping it goes to fraction and ruins the dependency matrix computation 
+    # result intuation : How much times out colum is the columns
+    return c 
+
 def solve_matrix(matrix, target_vector):
     """
         Solving Matrix with respect to the target vector, 
@@ -136,25 +153,55 @@ def solve_matrix(matrix, target_vector):
             3. reduce other rows via row operations
     """
     augmented_matrix = []
-    for row, element in zip(matrix, target_vector):
+    for row, element in zip(matrix, target_vector): # BUG making iteration error
         augment_row = list(row)
         augment_row.append(element) # making augmented matrix
 
         augment_row = Vector(augment_row)
         augmented_matrix.append(augment_row)
 
-    print(f"Augmented matrix to solve : {augmented_matrix}")
+    print(f"Augmented matrix to solve : {augmented_matrix}") # Working * * 
 
-    # Searching for leader row out of the matrix
+    """
+        Making Reduced Row echelion form via one depth rule of geting pivots
+        reducing other rows based on multiplication based depndency to get leading 1 row for every row,
+        Making reduction and noting steps,
+        
+        Procedure
+        finding leader row -> Parse all rows via dependency parsing for the dependency number and fetch the highest for leader
+    """
+    
+    # finding leader row with most dependency
+    dependency_map = {}
+    m = 0
+    for row in augmented_matrix:
+        d = dependency_parsing(row, augmented_matrix) # Getting number of dependency 
+        print(f"Dependency parsing output for the row : {row} results {d}")
+        dependency_map[str(row)] = d 
+        if d > m:
+            m = d 
+    # Got max with leader row 
+    if m == 0:
+        print("Either testing matrix dont make sence for geting dependency thing")
+        return None 
+    else:
+        # fetching respective row
+        key = [k for k, v in dependency_map.items() if v == m] # fetching respective key via dictionary
+        print(f"Leader row : {list(key)}")
+
     
 
     
 
 
 
-l = [[1, 3, 9] , [1, 6, 9], [1, 9, 9]]
+l = [[1, 1, 1] , [2, 2, 2], [3, 3, 3]]
 
 m = Matrix(l)
-print(f"Rank of the matrix : {m.get_rank(info=True)} ")
+x = Vector([1, 2, 3])
+
+print("Testing solve matrix")
+solve_matrix(m, x)
+
 
 

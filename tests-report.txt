@@ -1,2 +1,8 @@
 Feature         Status        Remarks
 Vector        tested        Working fine
+
+
+
+Bug reports
+    1. Rank finding logic is broken
+    2. Solving a matrix needs plan to execute
