@@ -1,126 +1,93 @@
-"""
-    Making Vector Encapsulation for Project
+'''
+    Vector
+    - Handles calculation calls
 
-    Vector properties
-    1. Basic vector computations and fundamental operations
-    2. Making basic fundamental abstractions of the vector object
-
-    --- 
-    
-"""
+    Targets
+    1. constructing vector
+    2. Computing functions
+        - length
+        - angle
+        - direction / unit vector
+    3. representation
+        - transpose
+        - basic operations of addition and multiplication
+'''
 import math
 
-
-class Vector(list):
-    '''
-        Object discriptions and methods overview and planning
-        Properties
-            1. Information stored -> numbers
-
+class Vector:
+    ''' Takes list of numbers and forms vector object with
         Functions
-            1. Fetch information about vector
-            2. Change the vectors condition
-            3. Construct a new vector
-                - copy, new creation , automatic, from existing
-            4. Basic fundamental operations on vector based on them
+        1. length() --> length of vector from origin
+        2. angle() --> angle from origion of projection
+        3. unit() --> unit vector
+        4. transpose() --> transpose of vector
+        5. add(Vector V) --> Adds the vector
+        6. multiply(Vector v) --> multiple of vector
     '''
-    def __init__(self, numbers=None):
-        if numbers:
-            # Making elements float before adding
-            for e in numbers:
-                if type(e) == int:
-                    e = float(e)
-                    self.append(e)
-                elif type(e) == float:
-                    self.append(e)
-                else:
-                    print("Vectors of numbers are only supported")
+    def __init__(self, number_list):
+        self.vector = []
+        # Initialise vector
+        for num in number_list:
+            self.vector.append(float(num))
 
-    def equal_to(self, v):
-        i = 0
-        check = 1
-        if len(v) == len(self):
-            for num in self:
-                if num != v[i]:
-                    check *= 0
-                i += 1
-            if check == 1:
-                return True
-            else:
-                return False
+        # Vector basic qualities
 
-    def scale_with(self, number):
-        scalled = []
-        for element in self:
-            scalled_element = number * element 
-            scalled.append(scalled_element)
-        print(scalled)
-        self.clear() # Clear the existing
-        self.extend(scalled)
+    def length(self):
+        squared_sum = 0
+        for num in self.vector:
+            squared_sum += num ** 2
+        return math.sqrt(squared_sum)  # returns the length
 
-    def inner_product(self, vector, type="Standard"):
-        '''
-            Chain inner products with other operations for real beauty of flexibility with different set of products rule with spaces respecitves
-        '''
-        if (len(vector) == len(self)) and (type(vector) == Vector):
-            i = 0
-            product_output = []
+    def angle(self):
+        """
+            compute angle with dimentions of sides of the vector 
+            or generalised way to find the direction
+        """
+        print("under development")
+        return None 
 
-            for e in self:
-                p = float(vector[i] * e)
-                product_output.append(p)
-                i += 1
-            return Vector(product_output)
-        else:
-            print("Either you messed with length or its not vector -_-")
+    def unit(self):
+        """
+            unit of vector = vector * 1/vector.length
+        """
+        length = self.length()
+        unit_vector = self.scaler_multiply(1/length)
+        return unit_vector  # Unit vector
+
+    def add(self, v):
+        if len(self.vector) != len(v.vector):
+            print("Length missmatch with required input")
             return None
-    
-    def dependecy_with(self, vector, option=1):  # Dependency check are working fine
-        '''
-        Tested working dependency checking logic *U*
+        result_vector = []
+        i = 0
+        for i in range(0,len(v.vector)):
+            elem1 = self.vector[i]
+            elem2 = v.vector[i]
+            result = elem1 + elem2
+            result_vector.append(result)
+        return result_vector
+# TODO We can generalise the two list iterations and operations unit
+    def multiply_with(self, v):
+        if len(self.vector) != len(v.vector):
+            print("Length missmatched")
+            return None
+        i = 0
+        product_vector = []
+        for i in range(0, len(v.vector)):
+            elem1 = self.vector[i]
+            elem2 = v.vector[i]
+            result = elem1 * elem2
+            product_vector.append(result)
+        return product_vector  # Prodcut vector output
 
+        
+    def scaler_multiply(self, number):
+        scalled_vector = []
+        number = float(number)
+        for num in self.vector:
+            scalled_vector.append(num * number)
+        return scalled_vector
 
-        Make dependecy analysis at vector level for ease in row echelion form reduction operations further
-        Functions discriptions and scope
-            > Making dependecy validations for other operations of projects function
-            > Making Vector based map output if required
-            > additive dependency 
-            > multiplicative dependency of the vectors
-
-        Dependency parsing part
-        Additive dependency
-            ~ Which number can map via addition the given number 
-                -> Compute the equation for the following respective we have n equatioins with one unknown ,
-                if difference of all of the numbers are same then they have one addition dependency other then they dont ^-^
-
-        '''
-        print(f"input set : {vector} and {self}")
-        dependency = 1
-        # Cases require optimisation as  same flow is repeated over all of the checks
-        match option:
-            case 1:  # Also checks for the subtractioin of the number
-                check = int(vector[0]) - int(self[0])
-
-                for x1,x2 in zip(self[1:],vector[1:]):
-                    if float(x2 - x1) != check:
-                        dependency *= 0
-
-                if dependency == 0:
-                    return 0
-                else:
-                    return check
-
-            case 2:
-                check = int(vector[0] / self[0]) # Fixed whole set of errrors out of float based dependency
-
-                for x1, x2 in zip(self[1:], vector[1:]):
-                    if (x2 / x1) != check:
-                        dependency *= 0
-                if dependency == 0:
-                    return 0
-                else:
-                    print(f"Dependency with multiplication {check}")
-                    return check  # Multiplication dependency
-
-
+v = [3,4]
+v1 = Vector(v)
 
